@@ -1,0 +1,35 @@
+
+GtkButton, GtkSpinButton {
+    border-color: black;
+    border-radius: 5px;
+    color: white;
+    background: linear-gradient(gray, black);
+}
+
+GtkTextView {
+    border-color: black;
+    border-radius: 10px;
+    color: white;
+    background-color: black;
+}
+
+GtkViewport#main {
+	background-image: url("data/bg.png");
+}
+
+GtkLabel{
+	color: white;
+	background-color: black;
+	border: 1px solid;
+    border-radius: 10px;
+}
+
+GtkScrolledWindow {
+    border: 3px solid;
+    border-radius: 10px;
+}
+GtkStatusbar, GtkNotebook, GtkMenubar{
+    background-color: gray;
+    color: white;
+    border: none;
+}
