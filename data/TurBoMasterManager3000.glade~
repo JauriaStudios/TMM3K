@@ -7,7 +7,6 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
-  <object class="GtkTextBuffer" id="textbuffer_info"/>
   <object class="GtkTreeStore" id="treestore_effects">
     <columns>
       <!-- column-name Nombre -->
@@ -34,7 +33,7 @@
   </object>
   <object class="GtkWindow" id="window1">
     <property name="width_request">1024</property>
-    <property name="height_request">768</property>
+    <property name="height_request">600</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">TMM3K</property>
     <property name="window_position">center</property>
@@ -215,6 +214,7 @@
             <property name="can_focus">True</property>
             <child>
               <object class="GtkViewport" id="viewport_general">
+                <property name="name">main</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
@@ -512,6 +512,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="halign">baseline</property>
+                        <property name="margin_right">20</property>
+                        <property name="margin_bottom">20</property>
                         <property name="hexpand">True</property>
                         <property name="orientation">vertical</property>
                         <child>
@@ -529,6 +531,7 @@
                                 <property name="opacity">0.75</property>
                                 <property name="halign">center</property>
                                 <property name="valign">center</property>
+                                <property name="margin_top">10</property>
                                 <property name="label" translatable="yes">Reglas</property>
                               </object>
                               <packing>
@@ -544,8 +547,10 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="opacity">0.75</property>
-                                <property name="hexpand">True</property>
+                                <property name="halign">center</property>
+                                <property name="margin_top">10</property>
                                 <property name="model">treestore_rules</property>
+                                <property name="popup_fixed_width">False</property>
                                 <signal name="changed" handler="on_combobox_rules_changed" swapped="no"/>
                                 <child>
                                   <object class="GtkCellRendererText" id="cellrenderertext3"/>
@@ -571,29 +576,15 @@
                           <object class="GtkScrolledWindow" id="scrolledwindow_info">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="halign">baseline</property>
-                            <property name="margin_bottom">3</property>
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
+                            <property name="margin_top">15</property>
                             <property name="shadow_type">in</property>
                             <child>
                               <object class="GtkViewport" id="viewport_info">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="margin_bottom">1</property>
+                                <property name="opacity">0.75</property>
                                 <child>
-                                  <object class="GtkTextView" id="textview_info">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="opacity">0.75</property>
-                                    <property name="editable">False</property>
-                                    <property name="wrap_mode">word-char</property>
-                                    <property name="top_margin">20</property>
-                                    <property name="bottom_margin">20</property>
-                                    <property name="indent">20</property>
-                                    <property name="cursor_visible">False</property>
-                                    <property name="buffer">textbuffer_info</property>
-                                  </object>
+                                  <placeholder/>
                                 </child>
                               </object>
                             </child>

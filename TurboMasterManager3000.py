@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 '''
-Hey, this is GPLv3 and copyright 2016 TurBoss
+    Hey, this is GPLv3 and copyright 2016 TurBoss from Jauria-Studios
 '''
 
 from __future__ import division
@@ -23,6 +23,8 @@ from gi.repository import Gtk
 from gi.repository import Gdk
 
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
+
+
 
 
 # Util for read database info as dictionaries
@@ -172,7 +174,7 @@ class Handler:
     def __init__(self):
 
         self.info_view = WebKit2.WebView()
-        self.info_view.load_uri("http://google.es")
+
 
         self.effects_player = pyglet.media.Player()
         self.music_player = pyglet.media.Player()
@@ -189,7 +191,9 @@ class Handler:
         self.combobox_rules = builder.get_object("combobox_rules")
         self.combobox_music = builder.get_object("combobox_music")
         self.combobox_effects = builder.get_object("combobox_effects")
-        self.textbuffer_info = builder.get_object("textbuffer_info")
+        self.viewport_info = builder.get_object("viewport_info")
+
+        self.viewport_info.add(self.info_view)
 
         self.amenaza_display.modify_fg(Gtk.StateType.NORMAL, Gdk.color_parse("Green"))
 
@@ -257,8 +261,8 @@ class Handler:
         category, rule = get_active_text(widget)
 
         description = get_rule_descriptions(self.con, category, rule)
-
-        self.textbuffer_info.set_text(description)
+        mdtext = markdown.markdown(description)
+        self.info_view.load_html(mdtext)
 
     def on_combobox_music_changed(self, widget, data=None):
         path, music = get_active_text(widget)
