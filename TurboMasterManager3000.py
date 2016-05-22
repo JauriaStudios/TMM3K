@@ -25,8 +25,6 @@ from gi.repository import Gdk
 from gi.repository.GdkPixbuf import Pixbuf, InterpType
 
 
-
-
 # Util for read database info as dictionaries
 def dict_factory(cursor, row):
     d = {}
@@ -169,12 +167,35 @@ def set_pixbuf(widget, maps):
     #pixbuf = pixbuf.scale_simple(width, height, InterpType.BILINEAR)
     maps.set_from_pixbuf(pixbuf)
 
+# Get monsters in stock
+def get_monster_stock(con):
+    
+    with con:
+        con.row_factory = dict_factory
+        cur = con.cursor()
+        cur.execute('SELECT * FROM monster_stock')
+        monster = cur.fetchall()
+
+    return monster
+
+# sets monster names in the treestore
+def set_monster_model(widget, data):
+
+    model = widget.get_model()
+    widget.set_model(None)
+    model.clear()
+
+    for monster in data:
+        piter = model.append(None, [monster[1]])
+        model.append(piter, [monster[0]])
+
+    widget.set_model(model)
+
 
 class Handler:
     def __init__(self):
 
         self.info_view = WebKit2.WebView()
-
 
         self.effects_player = pyglet.media.Player()
         self.music_player = pyglet.media.Player()
@@ -191,6 +212,7 @@ class Handler:
         self.combobox_rules = builder.get_object("combobox_rules")
         self.combobox_music = builder.get_object("combobox_music")
         self.combobox_effects = builder.get_object("combobox_effects")
+
         self.viewport_info = builder.get_object("viewport_info")
 
         self.viewport_info.add(self.info_view)
@@ -209,7 +231,7 @@ class Handler:
         self.current_playing_music = ""
 
         self.effects_sounds = set_sound_model(self.combobox_effects, self.effects)
-        #self.music_sounds = set_sound_model(self.combobox_music, self.music)
+        # self.music_sounds = set_sound_model(self.combobox_music, self.music)
 
         self.amenaza = 0
 
@@ -232,6 +254,24 @@ class Handler:
         for i in range(4):
             set_maps_model(self.maps_combobox[i], self.maps)
 
+        # Monster tab
+        
+        self.treeview_monster = builder.get_object("treeview_monster")
+        
+        self.monster_stock = get_monster_stock(self.con)
+        
+        self.monster_stock_names = []
+        for data in self.monster_stock:
+            for key, val in data.items():
+                if key == "name":
+                    name = val
+                elif key == "genre":
+                    genre = val
+            self.monster_stock_names.append((name, genre))
+            
+        print(self.monster_stock_names)
+        set_monster_model(self.treeview_monster, self.monster_stock_names)
+                    
         # All done
         print("Loading done.")
 
