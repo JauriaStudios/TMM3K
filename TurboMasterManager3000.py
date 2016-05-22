@@ -139,7 +139,7 @@ def get_rule_names(con, category):
     with con:
         con.row_factory = dict_factory
         cur = con.cursor()
-        cur.execute('SELECT name FROM rules WHERE category LIKE "%s"' % category)
+        cur.execute('SELECT name FROM rules WHERE category == "%s"' % category)
         names = cur.fetchall()
 
     return names
@@ -167,16 +167,35 @@ def set_pixbuf(widget, maps):
     #pixbuf = pixbuf.scale_simple(width, height, InterpType.BILINEAR)
     maps.set_from_pixbuf(pixbuf)
 
+
 # Get monsters in stock
-def get_monster_stock(con):
+def get_monster_stock_genre(con):
     
     with con:
         con.row_factory = dict_factory
         cur = con.cursor()
-        cur.execute('SELECT * FROM monster_stock')
-        monster = cur.fetchall()
+        cur.execute('SELECT DISTINCT genre FROM monster_stock')
+        genre = cur.fetchall()
+
+    return genre
+
+
+# Get monsters in stock by genre
+def get_monster_stock_by_genre(con, genre):
+
+    monster = {}
+
+    with con:
+        con.row_factory = dict_factory
+        cur = con.cursor()
+        for data in genre:
+            for key, value in data.items():
+
+                cur.execute('SELECT name FROM monster_stock WHERE genre == "%s"' % value)
+                monster[value] = (cur.fetchall())
 
     return monster
+
 
 # sets monster names in the treestore
 def set_monster_model(widget, data):
@@ -184,10 +203,12 @@ def set_monster_model(widget, data):
     model = widget.get_model()
     widget.set_model(None)
     model.clear()
-
-    for monster in data:
-        piter = model.append(None, [monster[1]])
-        model.append(piter, [monster[0]])
+    for key, val in data.items():
+        print(key)
+        piter = model.append(None, [key])
+        for data in val:
+            for key, val in data.items():
+                model.append(piter, [val])
 
     widget.set_model(model)
 
@@ -258,20 +279,11 @@ class Handler:
         
         self.treeview_monster = builder.get_object("treeview_monster")
         
-        self.monster_stock = get_monster_stock(self.con)
-        
-        self.monster_stock_names = []
-        for data in self.monster_stock:
-            for key, val in data.items():
-                if key == "name":
-                    name = val
-                elif key == "genre":
-                    genre = val
-            self.monster_stock_names.append((name, genre))
-            
-        print(self.monster_stock_names)
-        set_monster_model(self.treeview_monster, self.monster_stock_names)
-                    
+        self.monster_stock_genre = get_monster_stock_genre(self.con)
+        self.monster_stock = get_monster_stock_by_genre(self.con, self.monster_stock_genre)
+
+        set_monster_model(self.treeview_monster, self.monster_stock)
+
         # All done
         print("Loading done.")
 
