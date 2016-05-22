@@ -204,7 +204,6 @@ def set_monster_model(widget, data):
     widget.set_model(None)
     model.clear()
     for key, val in data.items():
-        print(key)
         piter = model.append(None, [key])
         for data in val:
             for key, val in data.items():
