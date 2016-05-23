@@ -7,6 +7,30 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkListStore" id="liststore__monster_cognition">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name hability -->
+      <column type="gint"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="liststore_monster_interaction">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name hability -->
+      <column type="gint"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="liststore_mosnter_actions">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+      <!-- column-name hability -->
+      <column type="gint"/>
+    </columns>
+  </object>
   <object class="GtkTreeStore" id="treestore_effects">
     <columns>
       <!-- column-name Nombre -->
@@ -913,7 +937,9 @@
                                 <property name="can_focus">True</property>
                                 <property name="model">treestore_monster</property>
                                 <child internal-child="selection">
-                                  <object class="GtkTreeSelection" id="treeview-selection2"/>
+                                  <object class="GtkTreeSelection" id="treeview-selection_monster">
+                                    <signal name="changed" handler="on_treeview_selection_monster_changed" swapped="no"/>
+                                  </object>
                                 </child>
                                 <child>
                                   <object class="GtkTreeViewColumn" id="treeviewcolumn1">
@@ -987,67 +1013,38 @@
                     <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkFixed" id="fixed3">
-                        <property name="height_request">400</property>
+                        <property name="height_request">150</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
                           <object class="GtkImage" id="image7">
-                            <property name="width_request">164</property>
-                            <property name="height_request">155</property>
+                            <property name="width_request">155</property>
+                            <property name="height_request">152</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="stock">gtk-missing-image</property>
                           </object>
-                          <packing>
-                            <property name="x">3</property>
-                            <property name="y">7</property>
-                          </packing>
                         </child>
                         <child>
                           <object class="GtkEntry" id="entry_monster_concept">
-                            <property name="width_request">301</property>
-                            <property name="height_request">80</property>
+                            <property name="width_request">300</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
                           <packing>
-                            <property name="x">288</property>
-                            <property name="y">48</property>
+                            <property name="x">290</property>
+                            <property name="y">71</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkTextView" id="textview1">
-                            <property name="width_request">582</property>
-                            <property name="height_request">144</property>
+                          <object class="GtkEntry" id="entry_monster_name">
+                            <property name="width_request">300</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </object>
                           <packing>
-                            <property name="x">1</property>
-                            <property name="y">121</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkTextView" id="textview2">
-                            <property name="width_request">580</property>
-                            <property name="height_request">104</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="x">1</property>
-                            <property name="y">272</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkEntry" id="entry1">
-                            <property name="width_request">294</property>
-                            <property name="height_request">80</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                          </object>
-                          <packing>
-                            <property name="x">293</property>
+                            <property name="x">289</property>
+                            <property name="y">15</property>
                           </packing>
                         </child>
                       </object>
@@ -1058,23 +1055,108 @@
                       </packing>
                     </child>
                     <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
                       <object class="GtkBox" id="box7">
+                        <property name="height_request">100</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <placeholder/>
+                          <object class="GtkScrolledWindow" id="scrolledwindow7">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="shadow_type">in</property>
+                            <child>
+                              <object class="GtkViewport" id="viewport7">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkTreeView" id="treeview_monster_actions">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="model">liststore_mosnter_actions</property>
+                                    <child internal-child="selection">
+                                      <object class="GtkTreeSelection" id="treeview-selection3"/>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
                         </child>
                         <child>
-                          <placeholder/>
+                          <object class="GtkScrolledWindow" id="scrolledwindow8">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="shadow_type">in</property>
+                            <child>
+                              <object class="GtkViewport" id="viewport8">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkTreeView" id="treeview_monster_interactions">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="model">liststore_monster_interaction</property>
+                                    <child internal-child="selection">
+                                      <object class="GtkTreeSelection" id="treeview-selection4"/>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
                         </child>
                         <child>
-                          <placeholder/>
+                          <object class="GtkScrolledWindow" id="scrolledwindow9">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="hexpand">True</property>
+                            <property name="shadow_type">in</property>
+                            <child>
+                              <object class="GtkViewport" id="viewport9">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkTreeView" id="treeview_monster_cognitions">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="model">liststore__monster_cognition</property>
+                                    <child internal-child="selection">
+                                      <object class="GtkTreeSelection" id="treeview-selection7"/>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
                         </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
                         <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="position">3</property>
                       </packing>
                     </child>
                     <child>
