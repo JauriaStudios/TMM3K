@@ -14,6 +14,7 @@ import pyglet
 import sqlite3
 import markdown
 import gi
+import ast
 
 gi.require_version('Gtk', '3.0')
 gi.require_version('WebKit2', '3.0')
@@ -211,6 +212,33 @@ def set_monster_model(widget, data):
 
     widget.set_model(model)
 
+def get_monster_info(con, name):
+
+    with con:
+        cur = con.cursor()
+        cur.execute('SELECT * FROM monster_stock WHERE name == "%s"' % name)
+        monster_info = cur.fetchone()
+
+    return monster_info
+
+
+# sets stats model
+def set_stats_model(widget, skill, skills):
+
+    model = widget.get_model()
+    widget.set_model(None)
+    model.clear()
+
+    skills_dict = ast.literal_eval(skills)
+
+    for key, value in skills_dict.items():
+        for actions in value:
+            print(actions)
+            #model.append(int(actions["points"]))
+
+    """
+    widget.set_model(model)
+    """
 
 class Handler:
     def __init__(self):
@@ -277,7 +305,15 @@ class Handler:
         # Monster tab
         
         self.treeview_monster = builder.get_object("treeview_monster")
-        
+
+        self.entry_monster_name = builder.get_object("entry_monster_name")
+        self.entry_monster_concept = builder.get_object("entry_monster_concept")
+
+        self.treeview_monster_actions = builder.get_object("treeview_monster_actions")
+        self.treeview_monster_insteractions = builder.get_object("treeview_monster_interactions")
+        self.treeview_monster_cognitions = builder.get_object("treeview_monster_cognitions")
+
+
         self.monster_stock_genre = get_monster_stock_genre(self.con)
         self.monster_stock = get_monster_stock_by_genre(self.con, self.monster_stock_genre)
 
@@ -356,6 +392,23 @@ class Handler:
 
     def on_combobox4_changed(self, widget, data=None):
         set_pixbuf(widget, self.map_images[3])
+
+    def on_treeview_selection_monster_changed(self, widget, data=None):
+        (model, pathlist) = widget.get_selected_rows()
+        for path in pathlist:
+            tree_iter = model.get_iter(path)
+            name = model.get_value(tree_iter, 0)
+            monster_info = get_monster_info(self.con, name)
+            if monster_info != None:
+
+                self.entry_monster_name.set_text(monster_info["name"])
+                self.entry_monster_concept.set_text(monster_info["concept"])
+
+                set_stats_model(self.treeview_monster_actions, monster_info["action"], monster_info["actions"])
+                set_stats_model(self.treeview_monster_insteractions, monster_info["interaction"], monster_info["interactions"])
+                set_stats_model(self.treeview_monster_cognitions, monster_info["cognition"], monster_info["cognitions"])
+
+
 
 builder = Gtk.Builder()
 builder.add_from_file(os.path.join("data", "TurBoMasterManager3000.glade"))
