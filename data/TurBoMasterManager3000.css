@@ -10,7 +10,7 @@ GtkTextView {
     border-color: black;
     border-radius: 10px;
     color: white;
-    background-color: black;
+    background-color: gray;
 }
 
 GtkViewport#main {
@@ -18,12 +18,7 @@ GtkViewport#main {
 }
 
 GtkLabel{
-    margin: 5px;
-    padding: 5px;
 	color: white;
-	background-color: black;
-	border: 1px solid;
-    border-radius: 10px;
 }
 
 GtkScrolledWindow {
@@ -31,6 +26,7 @@ GtkScrolledWindow {
     border-radius: 10px;
     border-color: black;
 }
+
 GtkStatusbar, GtkNotebook, GtkMenubar{
     background-color: gray;
     color: white;
