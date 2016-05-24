@@ -995,75 +995,93 @@
                 </child>
                 <child>
                   <object class="GtkFixed" id="fixed2">
-                    <property name="width_request">80</property>
+                    <property name="width_request">100</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkButton" id="button_new_monster">
-                        <property name="label">gtk-new</property>
-                        <property name="width_request">66</property>
-                        <property name="height_request">66</property>
+                      <object class="GtkButtonBox" id="buttonbox1">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="use_stock">True</property>
-                        <property name="image_position">top</property>
-                        <property name="always_show_image">True</property>
-                      </object>
-                      <packing>
-                        <property name="x">5</property>
-                        <property name="y">307</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button_edit_monster">
-                        <property name="label">gtk-edit</property>
-                        <property name="width_request">66</property>
-                        <property name="height_request">66</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="use_stock">True</property>
-                        <property name="image_position">top</property>
-                        <property name="always_show_image">True</property>
-                      </object>
-                      <packing>
-                        <property name="x">6</property>
-                        <property name="y">385</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button_save_monster">
-                        <property name="label">gtk-save</property>
-                        <property name="width_request">66</property>
-                        <property name="height_request">66</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="use_stock">True</property>
-                        <property name="image_position">top</property>
-                        <property name="always_show_image">True</property>
-                      </object>
-                      <packing>
-                        <property name="x">7</property>
-                        <property name="y">460</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkButton" id="button_add_monster">
-                        <property name="label">gtk-add</property>
-                        <property name="width_request">66</property>
-                        <property name="height_request">66</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="use_stock">True</property>
-                        <property name="image_position">top</property>
-                        <property name="always_show_image">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <property name="layout_style">start</property>
+                        <child>
+                          <object class="GtkButton" id="button_new_monster">
+                            <property name="label">gtk-new</property>
+                            <property name="width_request">66</property>
+                            <property name="height_request">66</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
+                            <property name="image_position">top</property>
+                            <property name="always_show_image">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button_edit_monster">
+                            <property name="label">gtk-edit</property>
+                            <property name="width_request">66</property>
+                            <property name="height_request">66</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
+                            <property name="image_position">top</property>
+                            <property name="always_show_image">True</property>
+                            <signal name="clicked" handler="on_button_edit_monster_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button_save_monster">
+                            <property name="label">gtk-save</property>
+                            <property name="width_request">66</property>
+                            <property name="height_request">66</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
+                            <property name="image_position">top</property>
+                            <property name="always_show_image">True</property>
+                            <signal name="clicked" handler="on_button_save_monster_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button_add_monster">
+                            <property name="label">gtk-add</property>
+                            <property name="width_request">66</property>
+                            <property name="height_request">66</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
+                            <property name="image_position">top</property>
+                            <property name="always_show_image">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
                         <property name="x">8</property>
-                        <property name="y">536</property>
+                        <property name="y">400</property>
                       </packing>
                     </child>
                   </object>
@@ -1200,7 +1218,7 @@
                                         <property name="title" translatable="yes">Nombre</property>
                                         <property name="expand">True</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext9"/>
+                                          <object class="GtkCellRendererText" id="cellrenderertext_monster_action_name"/>
                                           <attributes>
                                             <attribute name="text">0</attribute>
                                           </attributes>
@@ -1211,7 +1229,7 @@
                                       <object class="GtkTreeViewColumn" id="treeviewcolumn3">
                                         <property name="title" translatable="yes">Habilidad</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext10"/>
+                                          <object class="GtkCellRendererText" id="cellrenderertext_mosnter_action_skill"/>
                                           <attributes>
                                             <attribute name="text">1</attribute>
                                           </attributes>
@@ -1252,7 +1270,7 @@
                                         <property name="title" translatable="yes">Nombre</property>
                                         <property name="expand">True</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext11"/>
+                                          <object class="GtkCellRendererText" id="cellrenderertext_monster_interaction_name"/>
                                           <attributes>
                                             <attribute name="text">0</attribute>
                                           </attributes>
@@ -1263,7 +1281,7 @@
                                       <object class="GtkTreeViewColumn" id="treeviewcolumn5">
                                         <property name="title" translatable="yes">Habilidad</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext12"/>
+                                          <object class="GtkCellRendererText" id="cellrenderertext_monster_interaction_skill"/>
                                           <attributes>
                                             <attribute name="text">1</attribute>
                                           </attributes>
@@ -1304,7 +1322,7 @@
                                         <property name="title" translatable="yes">Nombre</property>
                                         <property name="expand">True</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext13"/>
+                                          <object class="GtkCellRendererText" id="cellrenderertext_cognition_name"/>
                                           <attributes>
                                             <attribute name="text">0</attribute>
                                           </attributes>
@@ -1315,7 +1333,7 @@
                                       <object class="GtkTreeViewColumn" id="treeviewcolumn7">
                                         <property name="title" translatable="yes">Habilidad</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext14"/>
+                                          <object class="GtkCellRendererText" id="cellrenderertext_cognition_skill"/>
                                           <attributes>
                                             <attribute name="text">1</attribute>
                                           </attributes>
