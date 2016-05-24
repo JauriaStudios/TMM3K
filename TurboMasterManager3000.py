@@ -310,6 +310,18 @@ class Handler:
         self.treeview_monster_insteractions = builder.get_object("treeview_monster_interactions")
         self.treeview_monster_cognitions = builder.get_object("treeview_monster_cognitions")
 
+        self.cellrenderer_monster_name = []
+        self.cellrenderer_monster_skill = []
+
+        self.cellrenderer_monster_name.append(builder.get_object("cellrenderertext_monster_action_name"))
+        self.cellrenderer_monster_skill.append(builder.get_object("cellrenderertext_mosnter_action_skill"))
+
+        self.cellrenderer_monster_name.append(builder.get_object("cellrenderertext_monster_interaction_name"))
+        self.cellrenderer_monster_skill.append(builder.get_object("cellrenderertext_monster_interaction_skill"))
+
+        self.cellrenderer_monster_name.append(builder.get_object("cellrenderertext_cognition_name"))
+        self.cellrenderer_monster_skill.append(builder.get_object("cellrenderertext_cognition_skill"))
+
 
         self.monster_stock_genre = get_monster_stock_genre(self.con)
         self.monster_stock = get_monster_stock_by_genre(self.con, self.monster_stock_genre)
@@ -390,13 +402,25 @@ class Handler:
     def on_combobox4_changed(self, widget, data=None):
         set_pixbuf(widget, self.map_images[3])
 
+    def on_button_edit_monster_clicked(self, widget, data=None):
+        print("Edit Monster")
+        for i in range(3):
+            self.cellrenderer_monster_name[i].set_property("editable", True)
+            self.cellrenderer_monster_skill[i].set_property("editable", True)
+
+    def on_button_save_monster_clicked(self, widget, data=None):
+        print("Save Monster")
+        for i in range(3):
+            self.cellrenderer_monster_name[i].set_property("editable", False)
+            self.cellrenderer_monster_skill[i].set_property("editable", False)
+
     def on_treeview_selection_monster_changed(self, widget, data=None):
         (model, pathlist) = widget.get_selected_rows()
         for path in pathlist:
             tree_iter = model.get_iter(path)
             name = model.get_value(tree_iter, 0)
             monster_info = get_monster_info(self.con, name)
-            if monster_info != None:
+            if monster_info:
 
                 self.entry_monster_name.set_text(monster_info["name"])
                 self.entry_monster_concept.set_text(monster_info["concept"])
