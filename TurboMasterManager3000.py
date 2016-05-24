@@ -234,11 +234,9 @@ def set_stats_model(widget, skill, skills):
     for key, value in skills_dict.items():
         for actions in value:
             print(actions)
-            #model.append(int(actions["points"]))
+            itr = model.append([actions["name"], int(actions["points"])])
 
-    """
     widget.set_model(model)
-    """
 
 class Handler:
     def __init__(self):
