@@ -17,18 +17,20 @@ GtkViewport#main {
 	background-image: url("data/bg.png");
 }
 
+GtkViewport#monster{
+	background-image: url("data/bg_monster.png");
+}
+
 GtkLabel{
 	color: white;
 }
 
 GtkScrolledWindow {
-    border: 5px solid;
     border-radius: 10px;
-    border-color: black;
 }
 
 GtkStatusbar, GtkNotebook, GtkMenubar{
-    background-color: gray;
+    background-color: black;
     color: white;
     border: none;
 }

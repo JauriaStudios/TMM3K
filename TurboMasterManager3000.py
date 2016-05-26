@@ -408,6 +408,9 @@ class Handler:
     def on_combobox4_changed(self, widget, data=None):
         set_pixbuf(widget, self.map_images[3])
 
+    def on_button_new_monster_clicked(self, widget, data=None):
+        print("new")
+
     def on_button_edit_monster_clicked(self, widget, data=None):
         self.button_edit_monster.set_sensitive(False)
         for i in range(3):
