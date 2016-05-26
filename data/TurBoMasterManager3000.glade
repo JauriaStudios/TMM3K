@@ -16,6 +16,12 @@
       <column type="gint"/>
     </columns>
   </object>
+  <object class="GtkListStore" id="liststore_monster_ingame">
+    <columns>
+      <!-- column-name name -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkListStore" id="liststore_monster_interaction">
     <columns>
       <!-- column-name name -->
@@ -33,12 +39,6 @@
     </columns>
   </object>
   <object class="GtkTreeStore" id="treestore_effects">
-    <columns>
-      <!-- column-name Nombre -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
-  <object class="GtkTreeStore" id="treestore_ingame">
     <columns>
       <!-- column-name Nombre -->
       <column type="gchararray"/>
@@ -975,7 +975,14 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <placeholder/>
+                              <object class="GtkTreeView" id="treeview_monster_ingame">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="model">liststore_monster_ingame</property>
+                                <child internal-child="selection">
+                                  <object class="GtkTreeSelection" id="treeview-selection5"/>
+                                </child>
+                              </object>
                             </child>
                           </object>
                         </child>
@@ -999,7 +1006,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <child>
-                      <object class="GtkButtonBox" id="buttonbox1">
+                      <object class="GtkButtonBox" id="buttonbox_monster">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
@@ -1196,48 +1203,67 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <child>
-                          <object class="GtkScrolledWindow" id="scrolledwindow7">
+                          <object class="GtkFrame" id="frame1">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
-                            <property name="shadow_type">in</property>
+                            <property name="label_xalign">0</property>
+                            <property name="shadow_type">none</property>
                             <child>
-                              <object class="GtkViewport" id="viewport7">
+                              <object class="GtkScrolledWindow" id="scrolledwindow7">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="shadow_type">in</property>
                                 <child>
-                                  <object class="GtkTreeView" id="treeview_monster_actions">
+                                  <object class="GtkViewport" id="viewport7">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="model">liststore_mosnter_actions</property>
-                                    <child internal-child="selection">
-                                      <object class="GtkTreeSelection" id="treeview-selection3"/>
-                                    </child>
+                                    <property name="can_focus">False</property>
                                     <child>
-                                      <object class="GtkTreeViewColumn" id="treeviewcolumn2">
-                                        <property name="title" translatable="yes">Nombre</property>
-                                        <property name="expand">True</property>
-                                        <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext_monster_action_name"/>
-                                          <attributes>
-                                            <attribute name="text">0</attribute>
-                                          </attributes>
+                                      <object class="GtkTreeView" id="treeview_monster_actions">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="model">liststore_mosnter_actions</property>
+                                        <property name="enable_grid_lines">both</property>
+                                        <child internal-child="selection">
+                                          <object class="GtkTreeSelection" id="treeview-selection3">
+                                            <property name="mode">none</property>
+                                          </object>
                                         </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkTreeViewColumn" id="treeviewcolumn3">
-                                        <property name="title" translatable="yes">Habilidad</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext_mosnter_action_skill"/>
-                                          <attributes>
-                                            <attribute name="text">1</attribute>
-                                          </attributes>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn2">
+                                            <property name="title" translatable="yes">Nombre</property>
+                                            <property name="expand">True</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext_monster_action_name"/>
+                                              <attributes>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn3">
+                                            <property name="title" translatable="yes">Habilidad</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext_mosnter_action_skill"/>
+                                              <attributes>
+                                                <attribute name="text">1</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
                                         </child>
                                       </object>
                                     </child>
                                   </object>
                                 </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="label1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Acción</property>
                               </object>
                             </child>
                           </object>
@@ -1248,48 +1274,67 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkScrolledWindow" id="scrolledwindow8">
+                          <object class="GtkFrame" id="frame2">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
-                            <property name="shadow_type">in</property>
+                            <property name="label_xalign">0</property>
+                            <property name="shadow_type">none</property>
                             <child>
-                              <object class="GtkViewport" id="viewport8">
+                              <object class="GtkScrolledWindow" id="scrolledwindow8">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="shadow_type">in</property>
                                 <child>
-                                  <object class="GtkTreeView" id="treeview_monster_interactions">
+                                  <object class="GtkViewport" id="viewport8">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="model">liststore_monster_interaction</property>
-                                    <child internal-child="selection">
-                                      <object class="GtkTreeSelection" id="treeview-selection4"/>
-                                    </child>
+                                    <property name="can_focus">False</property>
                                     <child>
-                                      <object class="GtkTreeViewColumn" id="treeviewcolumn4">
-                                        <property name="title" translatable="yes">Nombre</property>
-                                        <property name="expand">True</property>
-                                        <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext_monster_interaction_name"/>
-                                          <attributes>
-                                            <attribute name="text">0</attribute>
-                                          </attributes>
+                                      <object class="GtkTreeView" id="treeview_monster_interactions">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="model">liststore_monster_interaction</property>
+                                        <property name="enable_grid_lines">both</property>
+                                        <child internal-child="selection">
+                                          <object class="GtkTreeSelection" id="treeview-selection4">
+                                            <property name="mode">none</property>
+                                          </object>
                                         </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkTreeViewColumn" id="treeviewcolumn5">
-                                        <property name="title" translatable="yes">Habilidad</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext_monster_interaction_skill"/>
-                                          <attributes>
-                                            <attribute name="text">1</attribute>
-                                          </attributes>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn4">
+                                            <property name="title" translatable="yes">Nombre</property>
+                                            <property name="expand">True</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext_monster_interaction_name"/>
+                                              <attributes>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn5">
+                                            <property name="title" translatable="yes">Habilidad</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext_monster_interaction_skill"/>
+                                              <attributes>
+                                                <attribute name="text">1</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
                                         </child>
                                       </object>
                                     </child>
                                   </object>
                                 </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="label7">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Interacción</property>
                               </object>
                             </child>
                           </object>
@@ -1300,48 +1345,67 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkScrolledWindow" id="scrolledwindow9">
+                          <object class="GtkFrame" id="frame3">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
+                            <property name="can_focus">False</property>
                             <property name="hexpand">True</property>
-                            <property name="shadow_type">in</property>
+                            <property name="label_xalign">0</property>
+                            <property name="shadow_type">none</property>
                             <child>
-                              <object class="GtkViewport" id="viewport9">
+                              <object class="GtkScrolledWindow" id="scrolledwindow9">
                                 <property name="visible">True</property>
-                                <property name="can_focus">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="hexpand">True</property>
+                                <property name="shadow_type">in</property>
                                 <child>
-                                  <object class="GtkTreeView" id="treeview_monster_cognitions">
+                                  <object class="GtkViewport" id="viewport9">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="model">liststore__monster_cognition</property>
-                                    <child internal-child="selection">
-                                      <object class="GtkTreeSelection" id="treeview-selection7"/>
-                                    </child>
+                                    <property name="can_focus">False</property>
                                     <child>
-                                      <object class="GtkTreeViewColumn" id="treeviewcolumn6">
-                                        <property name="title" translatable="yes">Nombre</property>
-                                        <property name="expand">True</property>
-                                        <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext_cognition_name"/>
-                                          <attributes>
-                                            <attribute name="text">0</attribute>
-                                          </attributes>
+                                      <object class="GtkTreeView" id="treeview_monster_cognitions">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="model">liststore__monster_cognition</property>
+                                        <property name="enable_grid_lines">both</property>
+                                        <child internal-child="selection">
+                                          <object class="GtkTreeSelection" id="treeview-selection7">
+                                            <property name="mode">none</property>
+                                          </object>
                                         </child>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="GtkTreeViewColumn" id="treeviewcolumn7">
-                                        <property name="title" translatable="yes">Habilidad</property>
                                         <child>
-                                          <object class="GtkCellRendererText" id="cellrenderertext_cognition_skill"/>
-                                          <attributes>
-                                            <attribute name="text">1</attribute>
-                                          </attributes>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn6">
+                                            <property name="title" translatable="yes">Nombre</property>
+                                            <property name="expand">True</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext_cognition_name"/>
+                                              <attributes>
+                                                <attribute name="text">0</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn" id="treeviewcolumn7">
+                                            <property name="title" translatable="yes">Habilidad</property>
+                                            <child>
+                                              <object class="GtkCellRendererText" id="cellrenderertext_cognition_skill"/>
+                                              <attributes>
+                                                <attribute name="text">1</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
                                         </child>
                                       </object>
                                     </child>
                                   </object>
                                 </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="label8">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Cognición</property>
                               </object>
                             </child>
                           </object>
