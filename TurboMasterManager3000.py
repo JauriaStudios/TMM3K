@@ -303,6 +303,12 @@ class Handler:
         
         self.treeview_monster = builder.get_object("treeview_monster")
 
+
+        self.button_new_monster = builder.get_object("button_new_monster")
+        self.button_edit_monster = builder.get_object("button_edit_monster")
+        self.button_save_monster = builder.get_object("button_save_monster")
+        self.button_add_monster = builder.get_object("button_add_monster")
+
         self.entry_monster_name = builder.get_object("entry_monster_name")
         self.entry_monster_concept = builder.get_object("entry_monster_concept")
 
@@ -403,13 +409,13 @@ class Handler:
         set_pixbuf(widget, self.map_images[3])
 
     def on_button_edit_monster_clicked(self, widget, data=None):
-        print("Edit Monster")
+        self.button_edit_monster.set_sensitive(False)
         for i in range(3):
             self.cellrenderer_monster_name[i].set_property("editable", True)
             self.cellrenderer_monster_skill[i].set_property("editable", True)
 
     def on_button_save_monster_clicked(self, widget, data=None):
-        print("Save Monster")
+        self.button_edit_monster.set_sensitive(True)
         for i in range(3):
             self.cellrenderer_monster_name[i].set_property("editable", False)
             self.cellrenderer_monster_skill[i].set_property("editable", False)
