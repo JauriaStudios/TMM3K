@@ -1115,15 +1115,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkImage" id="image_monster">
-                                <property name="width_request">150</property>
-                                <property name="height_request">150</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <property name="stock">gtk-missing-image</property>
-                              </object>
-                            </child>
-                            <child>
                               <object class="GtkEntry" id="entry_monster_concept">
                                 <property name="width_request">300</property>
                                 <property name="visible">True</property>
@@ -1144,6 +1135,40 @@
                                 <property name="x">289</property>
                                 <property name="y">15</property>
                               </packing>
+                            </child>
+                            <child>
+                              <object class="GtkBox" id="box8">
+                                <property name="width_request">100</property>
+                                <property name="height_request">80</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <object class="GtkImage" id="image_monster">
+                                    <property name="width_request">150</property>
+                                    <property name="height_request">150</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="stock">gtk-missing-image</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="entry_monster_pic">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
                             </child>
                           </object>
                           <packing>

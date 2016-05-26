@@ -168,74 +168,78 @@ def set_pixbuf(widget, maps):
     #pixbuf = pixbuf.scale_simple(width, height, InterpType.BILINEAR)
     maps.set_from_pixbuf(pixbuf)
 
+class Monster():
 
-# Get monsters in stock
-def get_monster_stock_genre(con):
-    
-    with con:
-        con.row_factory = dict_factory
-        cur = con.cursor()
-        cur.execute('SELECT DISTINCT genre FROM monster_stock')
-        genre = cur.fetchall()
+    def __init__(self):
+        print("INIT MONSTER TAB")
 
-    return genre
+    # Get monsters in stock
+    def get_stock_genre(self, con):
 
+        with con:
+            con.row_factory = dict_factory
+            cur = con.cursor()
+            cur.execute('SELECT DISTINCT genre FROM monster_stock')
+            genre = cur.fetchall()
 
-# Get monsters in stock by genre
-def get_monster_stock_by_genre(con, genre):
-
-    monster = {}
-
-    with con:
-        con.row_factory = dict_factory
-        cur = con.cursor()
-        for data in genre:
-            for key, value in data.items():
-
-                cur.execute('SELECT name FROM monster_stock WHERE genre == "%s"' % value)
-                monster[value] = (cur.fetchall())
-
-    return monster
+        return genre
 
 
-# sets monster names in the treestore
-def set_monster_model(widget, data):
+    # Get monsters in stock by genre
+    def get_stock_by_genre(self, con, genre):
 
-    model = widget.get_model()
-    widget.set_model(None)
-    model.clear()
-    for key, val in data.items():
-        piter = model.append(None, [key])
-        for data in val:
-            for key, val in data.items():
-                model.append(piter, [val])
+        monster = {}
 
-    widget.set_model(model)
+        with con:
+            con.row_factory = dict_factory
+            cur = con.cursor()
+            for data in genre:
+                for key, value in data.items():
 
-def get_monster_info(con, name):
+                    cur.execute('SELECT name FROM monster_stock WHERE genre == "%s"' % value)
+                    monster[value] = (cur.fetchall())
 
-    with con:
-        cur = con.cursor()
-        cur.execute('SELECT * FROM monster_stock WHERE name == "%s"' % name)
-        monster_info = cur.fetchone()
-
-    return monster_info
+        return monster
 
 
-# sets stats model
-def set_stats_model(widget, skill, skills):
+    # sets monster names in the treestore
+    def set_treestore_stock_model(self, widget, data):
 
-    model = widget.get_model()
-    widget.set_model(None)
-    model.clear()
+        model = widget.get_model()
+        widget.set_model(None)
+        model.clear()
+        for key, val in data.items():
+            piter = model.append(None, [key])
+            for data in val:
+                for key, val in data.items():
+                    model.append(piter, [val])
 
-    skills_dict = ast.literal_eval(skills)
+        widget.set_model(model)
 
-    for key, value in skills_dict.items():
-        for actions in value:
-            itr = model.append([actions["name"], int(actions["points"])])
+    def get_info(self, con, name):
 
-    widget.set_model(model)
+        with con:
+            cur = con.cursor()
+            cur.execute('SELECT * FROM monster_stock WHERE name == "%s"' % name)
+            monster_info = cur.fetchone()
+
+        return monster_info
+
+
+    # sets stats model
+    def set_stats_model(self, widget, skill, skills):
+
+        model = widget.get_model()
+        widget.set_model(None)
+        model.clear()
+
+        skills_dict = ast.literal_eval(skills)
+
+        for key, value in skills_dict.items():
+            for actions in value:
+                itr = model.append([actions["name"], int(actions["points"])])
+
+        widget.set_model(model)
 
 class Handler:
     def __init__(self):
@@ -300,7 +304,10 @@ class Handler:
             set_maps_model(self.maps_combobox[i], self.maps)
 
         # Monster tab
-        
+
+        self.monster = Monster()
+
+
         self.treeview_monster = builder.get_object("treeview_monster")
 
 
@@ -310,6 +317,7 @@ class Handler:
         self.button_add_monster = builder.get_object("button_add_monster")
 
         self.image_monster = builder.get_object("image_monster")
+        self.entry_monster_pic = builder.get_object("entry_monster_pic")
 
         self.entry_monster_name = builder.get_object("entry_monster_name")
         self.entry_monster_concept = builder.get_object("entry_monster_concept")
@@ -331,10 +339,10 @@ class Handler:
         self.cellrenderer_monster_skill.append(builder.get_object("cellrenderertext_cognition_skill"))
 
 
-        self.monster_stock_genre = get_monster_stock_genre(self.con)
-        self.monster_stock = get_monster_stock_by_genre(self.con, self.monster_stock_genre)
+        self.monster_stock_genre = self.monster.get_stock_genre(self.con)
+        self.monster_stock = self.monster.get_stock_by_genre(self.con, self.monster_stock_genre)
 
-        set_monster_model(self.treeview_monster, self.monster_stock)
+        self.monster.set_treestore_stock_model(self.treeview_monster, self.monster_stock)
 
         # All done
         print("Loading done.")
@@ -430,26 +438,24 @@ class Handler:
         for path in pathlist:
             tree_iter = model.get_iter(path)
             name = model.get_value(tree_iter, 0)
-            monster_info = get_monster_info(self.con, name)
+            monster_info = self.monster.get_info(self.con, name)
             if monster_info:
 
                 if monster_info["picture"]:
-                    path = os.path.join("data", "monster", "pic")
-                    image = monster_info["picture"]
-                    file = os.path.join(path, image)
-
+                    file = os.path.join("data", "monster", "pic", "".join((monster_info["picture"], ".png")))
                     pixbuf = Pixbuf.new_from_file(file)
                     self.image_monster.set_from_pixbuf(pixbuf)
+                    self.entry_monster_pic.set_text(monster_info["picture"])
                 else:
                     self.image_monster.clear()
+                    self.entry_monster_pic.set_text("Sin Imagen")
 
                 self.entry_monster_name.set_text(monster_info["name"])
                 self.entry_monster_concept.set_text(monster_info["concept"])
 
-                set_stats_model(self.treeview_monster_actions, monster_info["action"], monster_info["actions"])
-                set_stats_model(self.treeview_monster_insteractions, monster_info["interaction"], monster_info["interactions"])
-                set_stats_model(self.treeview_monster_cognitions, monster_info["cognition"], monster_info["cognitions"])
-
+                self.monster.set_stats_model(self.treeview_monster_actions, monster_info["action"], monster_info["actions"])
+                self.monster.set_stats_model(self.treeview_monster_insteractions, monster_info["interaction"], monster_info["interactions"])
+                self.monster.set_stats_model(self.treeview_monster_cognitions, monster_info["cognition"], monster_info["cognitions"])
 
 
 builder = Gtk.Builder()
