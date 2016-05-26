@@ -309,6 +309,8 @@ class Handler:
         self.button_save_monster = builder.get_object("button_save_monster")
         self.button_add_monster = builder.get_object("button_add_monster")
 
+        self.image_monster = builder.get_object("image_monster")
+
         self.entry_monster_name = builder.get_object("entry_monster_name")
         self.entry_monster_concept = builder.get_object("entry_monster_concept")
 
@@ -430,6 +432,16 @@ class Handler:
             name = model.get_value(tree_iter, 0)
             monster_info = get_monster_info(self.con, name)
             if monster_info:
+
+                if monster_info["picture"]:
+                    path = os.path.join("data", "monster", "pic")
+                    image = monster_info["picture"]
+                    file = os.path.join(path, image)
+
+                    pixbuf = Pixbuf.new_from_file(file)
+                    self.image_monster.set_from_pixbuf(pixbuf)
+                else:
+                    self.image_monster.clear()
 
                 self.entry_monster_name.set_text(monster_info["name"])
                 self.entry_monster_concept.set_text(monster_info["concept"])
